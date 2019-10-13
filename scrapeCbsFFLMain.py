@@ -1,6 +1,9 @@
 """
-Web scraping example from
-https://towardsdatascience.com/web-scraping-html-tables-with-python-c9baba21059
+Web scraping example for FFL.
+scraping CBS Sports player pages for stats
+in their completed games table
+then combining into dataframes by position.
+and then exporting them to csv files
 """
 # from scrapeCbsFFL import scrape
 from scrapeCbsFFLSoup import scrape
@@ -22,10 +25,9 @@ with open(infname) as inf:
         player_name = row[1]
         position = row[2]
 
-        print(f'{player_name}, {position}')
+        print(f'{player_name}')
 
         url = base_url + player_url_piece
-        # print(url)
         foo = scrape(player_name, url, current_week)
         dataframes_dict[position].append(foo)
 
