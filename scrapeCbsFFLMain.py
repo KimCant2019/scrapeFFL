@@ -17,7 +17,7 @@ infname_join = 'scrapeCbsFFLPlayerStudentJoin.csv'
 infname ='scrapeCbsFFLPlayers.csv'
 
 # base url for CBS FFL players
-base_url = 'https://www.cbssports.com/fantasy/football/players/'
+# base_url = 'https://www.cbssports.com/fantasy/football/players/'
 current_week = 6
 
 # init the dictionaries.  One for data frames, one for player-student LUT
@@ -38,17 +38,17 @@ with open(infname) as inf:
     csv_reader = csv.reader(inf)
     next(csv_reader)
     for row in csv_reader:
-        player_url_piece = row[0]
+        player_url = row[0]
         player_name = row[1]
         position = row[2]
 
         print(f'{player_name}')
 
-        url = base_url + player_url_piece
-        foo = scrape(player_name, url, player_student_dict)
+        # url = base_url + player_url
+        foo = scrape(player_name, player_url, player_student_dict)
         dataframes_dict[position].append(foo)
 
 # concatenate each of the tables by position then export to csv
 for pos in dataframes_dict.keys():
     df = pd.concat(dataframes_dict[pos])
-    export=df.to_csv(f'ffl_{pos}_week{current_week:02d}.csv', index=None, header=True)
+    export=df.to_csv(f'ffl_{pos}_week{current_week:02d}.csv', index=False, header=True)
