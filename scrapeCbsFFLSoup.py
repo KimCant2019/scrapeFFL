@@ -17,7 +17,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-def scrape(player_name, url, num_week=None):
+def scrape(player_name, url, player_student_dict):
     """
     player_name and url to scrape
     don't need num_week but leaving
@@ -39,6 +39,7 @@ def scrape(player_name, url, num_week=None):
     header_row = table_rows[0].find_all('th')
     column_names = [header.text for header in header_row]
     column_names.insert(0,'Player')
+    column_names.insert(1, 'Student')
 
 # exclude the first TR (headers)
 # and the final 2 TRs (projection and footnote)
@@ -50,6 +51,8 @@ def scrape(player_name, url, num_week=None):
         row = [cell_data.text.replace('*','').strip() for cell_data in td]
         row = [0 if tr=='-' else tr for tr in row]
         row.insert(0,player_name)
+        student_name = player_student_dict[player_name]
+        row.insert(1,student_name)
         # if len(row)==0:
         #     continue
         table_list.append(row)
@@ -57,8 +60,10 @@ def scrape(player_name, url, num_week=None):
     return result_dataframe
 
 if __name__=='__main__':
+    my_dict = {'Russell Wilson':'Brownie', 'Jared Goff':'Ninja'}
+
     url = 'https://www.cbssports.com/fantasy/football/players/1272242/russell-wilson'
-    foo = scrape('Russell Wilson', url)
+    foo = scrape('Russell Wilson', url, my_dict)
     url = 'https://www.cbssports.com/fantasy/football/players/2061053/jared-goff'
-    bar = scrape('Jared Goff', url)
+    bar = scrape('Jared Goff', url, my_dict)
     print(pd.concat([foo,bar]))
