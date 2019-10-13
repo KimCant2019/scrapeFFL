@@ -1,5 +1,9 @@
 """
-Web scraping example from
+@deprecated
+Don't use.  Instead use the beautiful soup version that is in
+scrapeCbsFFLSoup.py
+
+Web scraping example using lxml.  Using sample code from
 https://towardsdatascience.com/web-scraping-html-tables-with-python-c9baba21059
 """
 # import urllib.request
