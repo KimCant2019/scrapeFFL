@@ -2,7 +2,8 @@
 Web scraping example from
 https://towardsdatascience.com/web-scraping-html-tables-with-python-c9baba21059
 """
-from scrapeCbsFFL import scrape
+# from scrapeCbsFFL import scrape
+from scrapeCbsFFLSoup import scrape
 import csv
 import pandas as pd
 
